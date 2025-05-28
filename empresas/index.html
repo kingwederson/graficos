@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empreendedorismo</title>
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+    <script>
+        (async () => {
+
+            // Dados a apresentar no mapa
+            const data = [
+                ['Andrelândia', 9.73],
+                ['Aracitaba', 9.08],
+                ['Arantina', 9.4],
+                ['Belmiro Braga', 11.87],
+                ['Bias Fortes', 5.21],
+                ['Bocaina de Minas', 12.51],
+                ['Bom Jardim de Minas', 12.43],
+                ['Chácara', 12.98],
+                ['Chiador', 7.82],
+                ['Coronel Pacheco', 8.83],
+                ['Ewbank da Câmara', 9.37],
+                ['Goianá', 12.85],
+                ['Juiz de Fora', 14.19],
+                ['Liberdade', 9.65],
+                ['Lima Duarte', 14.12],
+                ['Matias Barbosa', 13.95],
+                ['Olaria', 8.74],
+                ['Oliveira Fortes', 8.49],
+                ['Paiva', 9.5],
+                ['Passa Vinte', 8.96],
+                ['Pedro Teixeira', 8.51],
+                ['Piau', 7.22],
+                ['Rio Novo', 10.59],
+                ['Rio Preto', 9.73],
+                ['Santa Bárbara do Monte Verde', 7.11],
+                ['Santana do Deserto', 12.92],
+                ['Santa Rita de Jacutinga', 11.1],
+                ['Santos Dumont', 8.47],
+                ['Simão Pereira', 11.67]
+            ];
+
+            // Load the geojson germany map
+            const geojson = await fetch(
+                'Juiz_de_Fora_County.geojson'
+            ).then(response => response.json());
+
+            // Initialize the chart
+            Highcharts.mapChart('container', {
+                chart: {
+                    map: geojson
+                },
+
+                title: {
+                    text: 'Índice de Empreendedorismo'
+                },
+
+                subtitle: {
+                    text: 'Segmentado por município da Região Geográfica Imediata de Juiz de Fora'
+                },
+
+                accessibility: {
+                    typeDescription: 'Razão de empresas por habitantes.'
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                colorAxis: {
+                    tickPixelInterval: 100,
+                    /*minColor: '#808000',*/
+                    /*maxColor: '#0000ff',*/
+                    stops: [
+                        //[0.00, '#FFFF99'],[1.00, '#C8A2C8'] // Laranja e Roxo
+                        [0.00, '#FFDB58'],[1.00, '#40E0D0'] // Amarelo e Turquesa
+                        //[0.00, '#654321'],[1.00, '#FF69B4'] // Marrom e Rosa
+                        //[0.00, '#E30B5D'],[1.00, '#1E90FF'] // Vermelho e Azul
+                        //[0.00, '#FFB6C1'], [1.00, '#4682B4'] // Rosa claro e Azul aço
+                    ]
+                },
+
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                        const pop = (this.point.properties.POP).toLocaleString('fr-FR');
+                        return `<b style="text-transform: uppercase;">${this.point.properties.nome}</b><br>
+                                <table>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="text-align: center;"><b>MG</b></th>
+                                    </tr>
+                                    <tr>
+                                        <td>População:</td>
+                                        <td style="text-align: right;"><b>${pop}</b></td>
+                                        <td style="text-align: right;"><b>20 539 989</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Índice empresarial:</td>
+                                        <td style="text-align: right;"><b>${this.point.value}%</b></td>
+                                        <td style="text-align: right;"><b>12.11%</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total de empresas:</td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.empresas).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>2 488 938</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>● MEI:</td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.MEI).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>1 427 367</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>● MPE:</td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.MPE).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>921 653</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>● Demais:</td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.Demais).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>139 918</b></td>
+                                    </tr>
+                                </table>`;
+                    }
+                },
+
+                series: [{
+                    data: data,
+                    keys: ['nome', 'value'],
+                    joinBy: 'nome',
+                    name: 'Índice de Empreendedorismo',
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.properties.nome}'
+                    }
+                }],
+                credits: {
+                    enabled: true,
+                    text: 'Fonte: Mapa de Empresas; Ministério da Economia (abril de 2025)',
+                    href: 'https://www.gov.br/empresas-e-negocios/pt-br/mapa-de-empresas/'
+                }
+            });
+        })();
+    </script>
+    <style>
+        #container {
+            height: 148mm;
+            width: 210mm;
+            margin: 0 auto;
+            background-color: #444;
+            border: 1px solid #000;
+        }
+
+        .loading {
+            margin-top: 10em;
+            text-align: center;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+
+</html>
