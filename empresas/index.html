@@ -90,7 +90,7 @@
                 tooltip: {
                     useHTML: true,
                     formatter: function () {
-                        const pop = (this.point.properties.POP).toLocaleString('fr-FR');
+                        const pop = (this.point.properties.POP).toLocaleString('pt-BR');
                         return `<b style="text-transform: uppercase;">${(this.point.properties.nome).toLocaleString('pt-BR')}</b><br>
                                 <table>
                                     <tr>
@@ -116,7 +116,7 @@
                                     <tr>
                                         <td>● Estadual:</td>
                                         <td style="text-align: right;"><b>12,11%</b></td>
-                                        <td style="text-align: right;"><b>(${this.point.value-12.11>0 ? '+':''}${(this.point.value-12.11).toFixed(2).toLocaleString('pt-BR')}%)</b></td>
+                                        <td style="text-align: right;"><b>(${this.point.value-12.11>0 ? '+':''}${((this.point.value-12.11).toFixed(2)).toLocaleString('pt-BR')}%)</b></td>
                                     </tr>
                                     <tr>
                                         <td>Total de empresas:</td>
