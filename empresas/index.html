@@ -91,7 +91,7 @@
                     useHTML: true,
                     formatter: function () {
                         const pop = (this.point.properties.POP).toLocaleString('fr-FR');
-                        return `<b style="text-transform: uppercase;">${this.point.properties.nome}</b><br>
+                        return `<b style="text-transform: uppercase;">${(this.point.properties.nome).toLocaleString('pt-BR')}</b><br>
                                 <table>
                                     <tr>
                                         <th>Ranking:</th>
@@ -99,24 +99,24 @@
                                     </tr>
                                     <tr>
                                         <td>População:</td>
-                                        <td style="text-align: right;"><b>${pop}</b></td>
+                                        <td style="text-align: right;"><b>${(pop).toLocaleString('pt-BR')}</b></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">Índice empresarial:</td>
                                     </tr>
                                     <tr>
                                         <td>● Municipal:</td>
-                                        <td style="text-align: right;"><b>${this.point.value}%</b></td>
+                                        <td style="text-align: right;"><b>${(this.point.value).toLocaleString('pt-BR')}%</b></td>
                                     </tr>
                                     <tr>
                                         <td>● Local (RGI):</td>
                                         <td style="text-align: right;"><b>13.30%</b></td>
-                                        <td style="text-align: right;"><b>(${this.point.value-13.30>0 ? '+':''}${(this.point.value-13.30).toFixed(2)}%)</b></td>
+                                        <td style="text-align: right;"><b>(${this.point.value-13.30>0 ? '+':''}${(this.point.value-13.30).toFixed(2).toLocaleString('pt-BR')}%)</b></td>
                                     </tr>
                                     <tr>
                                         <td>● Estadual:</td>
                                         <td style="text-align: right;"><b>12.11%</b></td>
-                                        <td style="text-align: right;"><b>(${this.point.value-12.11>0 ? '+':''}${(this.point.value-12.11).toFixed(2)}%)</b></td>
+                                        <td style="text-align: right;"><b>(${this.point.value-12.11>0 ? '+':''}${(this.point.value-12.11).toFixed(2).toLocaleString('pt-BR')}%)</b></td>
                                     </tr>
                                     <tr>
                                         <td>Total de empresas:</td>
