@@ -91,7 +91,7 @@
                             color: '#333'
                         }
                     },
-                    showInLegend: false
+                    showInLegend: true
                 },
 
                 tooltip: {
@@ -111,6 +111,14 @@
                                     <tr>
                                         <td>População:</td>
                                         <td style="text-align: right;"><b>${(pop).toLocaleString('pt-BR')}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Produto Interno Bruto:</td>
+                                        <td style="text-align: right;"><b>R$ ${(parseInt(pop*this.point.properties.gdp_pc*1000)).toLocaleString('pt-BR')},00</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PIB per capta:</td>
+                                        <td style="text-align: right;"><b>R$ ${(this.point.properties.gdp_pc).toLocaleString('pt-BR')}</b></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">Índice empresarial:</td>
