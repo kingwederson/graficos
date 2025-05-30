@@ -101,7 +101,8 @@
                         return { x: 10, y: 10 };
                     },
                     formatter: function () {
-                        const pop = (this.point.properties.POP).toLocaleString('pt-BR');
+                        const pop = this.point.properties.POP;
+                        const gdp = pop*this.point.properties.gdp_pc;
                         return `<b style="text-transform: uppercase;">${(this.point.properties.nome).toLocaleString('pt-BR')}</b><br>
                                 <table>
                                     <tr>
@@ -114,11 +115,11 @@
                                     </tr>
                                     <tr>
                                         <td>Produto Interno Bruto:</td>
-                                        <td style="text-align: right;"><b>R$ ${(parseInt(pop*this.point.properties.gdp_pc*1000)).toLocaleString('pt-BR')},00</b></td>
+                                        <td colspan="2" style="text-align: right;"><b>R$ ${gdp.toLocaleString('pt-BR')}</b></td>
                                     </tr>
                                     <tr>
                                         <td>PIB per capta (2021):</td>
-                                        <td style="text-align: right;"><b>R$ ${(this.point.properties.gdp_pc).toLocaleString('pt-BR')}</b></td>
+                                        <td colspan="2" style="text-align: right;"><b>R$ ${(this.point.properties.gdp_pc).toLocaleString('pt-BR')}</b></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">Índice empresarial:</td>
