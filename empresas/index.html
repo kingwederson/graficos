@@ -9,7 +9,7 @@
     <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
     <script>
-        (async () => {
+        (async function() {
 
             // Dados a apresentar no mapa
             const data = [
@@ -84,11 +84,22 @@
                         //[0.00, '#654321'],[1.00, '#FF69B4'] // Marrom e Rosa
                         //[0.00, '#E30B5D'],[1.00, '#1E90FF'] // Vermelho e Azul
                         //[0.00, '#FFB6C1'], [1.00, '#4682B4'] // Rosa claro e Azul aço
-                    ]
+                    ],labels: {
+                        format: '{value}%', // Adiciona '%' aos valores
+                        style: {
+                            fontSize: '16px',
+                            color: '#333'
+                        }
+                    },
+                    showInLegend: false
                 },
 
                 tooltip: {
                     useHTML: true,
+                    positioner: function () {
+                        // Posição fixa: 10px da borda esquerda e 10px da borda superior
+                        return { x: 10, y: 10 };
+                    },
                     formatter: function () {
                         const pop = (this.point.properties.POP).toLocaleString('pt-BR');
                         return `<b style="text-transform: uppercase;">${(this.point.properties.nome).toLocaleString('pt-BR')}</b><br>
