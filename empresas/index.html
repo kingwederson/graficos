@@ -9,44 +9,44 @@
     <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
     <script>
-        (async function() {
+        (async () => {
 
             // Dados a apresentar no mapa
             const data = [
-                ['Andrelândia', 9.73],
-                ['Aracitaba', 9.08],
-                ['Arantina', 9.4],
-                ['Belmiro Braga', 11.87],
-                ['Bias Fortes', 5.21],
-                ['Bocaina de Minas', 12.51],
-                ['Bom Jardim de Minas', 12.43],
-                ['Chácara', 12.98],
-                ['Chiador', 7.82],
-                ['Coronel Pacheco', 8.83],
-                ['Ewbank da Câmara', 9.37],
+                ['Aracitaba', 8.88],
+                ['Andrelândia', 9.53],
+                ['Arantina', 9.16],
+                ['Belmiro Braga', 11.67],
+                ['Bias Fortes', 5.17],
+                ['Bom Jardim de Minas', 12.1],
+                ['Chácara', 12.56],
+                ['Coronel Pacheco', 8.72],
                 ['Goianá', 12.85],
                 ['Juiz de Fora', 14.19],
+                ['Bocaina de Minas', 12.15],
                 ['Liberdade', 9.65],
-                ['Lima Duarte', 14.12],
-                ['Matias Barbosa', 13.95],
-                ['Olaria', 8.74],
-                ['Oliveira Fortes', 8.49],
-                ['Paiva', 9.5],
-                ['Passa Vinte', 8.96],
-                ['Pedro Teixeira', 8.51],
-                ['Piau', 7.22],
-                ['Rio Novo', 10.59],
-                ['Rio Preto', 9.73],
-                ['Santa Bárbara do Monte Verde', 7.11],
-                ['Santana do Deserto', 12.92],
-                ['Santa Rita de Jacutinga', 11.1],
-                ['Santos Dumont', 8.47],
-                ['Simão Pereira', 11.67]
+                ['Lima Duarte', 13.73],
+                ['Matias Barbosa', 13.59],
+                ['Olaria', 8.56],
+                ['Oliveira Fortes', 8.34],
+                ['Paiva', 9.35],
+                ['Passa Vinte', 8.69],
+                ['Pedro Teixeira', 8.31],
+                ['Piau', 7.08],
+                ['Rio Novo', 10.38],
+                ['Rio Preto', 9.54],
+                ['Santa Bárbara do Monte Verde', 6.88],
+                ['Santana do Deserto', 12.67],
+                ['Chiador', 7.64],
+                ['Santa Rita de Jacutinga', 10.92],
+                ['Santos Dumont', 8.27],
+                ['Ewbank da Câmara', 9.13],
+                ['Simão Pereira', 11.24]
             ];
 
             // Load the geojson germany map
             const geojson = await fetch(
-                'Juiz_de_Fora_County.geojson?v=2025-06-09'
+                'Juiz_de_Fora_County.geojson'
             ).then(response => response.json());
 
             // Initialize the chart
@@ -80,79 +80,53 @@
                     /*maxColor: '#0000ff',*/
                     stops: [
                         //[0.00, '#FFFF99'],[1.00, '#C8A2C8'] // Laranja e Roxo
-                        [0.00, '#FF8080'],[0.33, '#FFDB58'],[1.00, '#40E0D0'] // Vervemelho, Amarelo e Turquesa
+                        [0.00, '#FFDB58'],[1.00, '#40E0D0'] // Amarelo e Turquesa
                         //[0.00, '#654321'],[1.00, '#FF69B4'] // Marrom e Rosa
                         //[0.00, '#E30B5D'],[1.00, '#1E90FF'] // Vermelho e Azul
                         //[0.00, '#FFB6C1'], [1.00, '#4682B4'] // Rosa claro e Azul aço
-                    ],labels: {
-                        format: '{value}%', // Adiciona '%' aos valores
-                        style: {
-                            fontSize: '16px',
-                            color: '#333'
-                        }
-                    },
-                    showInLegend: true
+                    ]
                 },
 
                 tooltip: {
                     useHTML: true,
-                    positioner: function () {
-                        // Posição fixa: 10px da borda esquerda e 10px da borda superior
-                        return { x: 10, y: 10 };
-                    },
                     formatter: function () {
-                        const pop = this.point.properties.POP;
-                        const gdp = pop*this.point.properties.gdp_pc;
-                        return `<b style="text-transform: uppercase;">${(this.point.properties.nome).toLocaleString('pt-BR')}</b><br>
+                        const pop = (this.point.properties.POP).toLocaleString('fr-FR');
+                        return `<b style="text-transform: uppercase;">${this.point.properties.nome}</b><br>
                                 <table>
                                     <tr>
-                                        <th>Ranking:</th>
-                                        <th style="text-align: right;">${this.point.properties.ranking}<sup><u>o</u></sup>/29</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="text-align: center;"><b>MG</b></th>
                                     </tr>
                                     <tr>
-                                        <td>População (est. 2024):</td>
-                                        <td style="text-align: right;"><b>${(pop).toLocaleString('pt-BR')}</b></td>
+                                        <td>População:</td>
+                                        <td style="text-align: right;"><b>${pop}</b></td>
+                                        <td style="text-align: right;"><b>20 539 989</b></td>
                                     </tr>
                                     <tr>
-                                        <td>Produto Interno Bruto:</td>
-                                        <td colspan="2" style="text-align: right;"><b>R$ ${parseInt(gdp).toLocaleString('pt-BR')}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>PIB per capta (2021):</td>
-                                        <td colspan="2" style="text-align: right;"><b>R$ ${(parseInt(this.point.properties.gdp_pc)).toLocaleString('pt-BR')}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">Índice empresarial:</td>
-                                    </tr>
-                                    <tr>
-                                        <td>● Municipal:</td>
-                                        <td style="text-align: right;"><b>${(this.point.value).toLocaleString('pt-BR')}%</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>● Regional:</td>
-                                        <td style="text-align: right;"><b>13,30%</b></td>
-                                        <td style="text-align: right;"><b>(${this.point.value-13.30>0 ? '+':''}${(this.point.value - 13.30).toLocaleString('pt-BR')}%)</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>● Estadual:</td>
-                                        <td style="text-align: right;"><b>12,11%</b></td>
-                                        <td style="text-align: right;"><b>(${this.point.value-12.11>0 ? '+':''}${(this.point.value - 12.11).toLocaleString('pt-BR')}%)</b></td>
+                                        <td>Índice empresarial:</td>
+                                        <td style="text-align: right;"><b>${this.point.value}%</b></td>
+                                        <td style="text-align: right;"><b>12.11%</b></td>
                                     </tr>
                                     <tr>
                                         <td>Total de empresas:</td>
-                                        <td style="text-align: right;"><b>${(this.point.properties.empresas).toLocaleString('pt-BR')}</b></td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.empresas).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>2 488 938</b></td>
                                     </tr>
                                     <tr>
                                         <td>● MEI:</td>
-                                        <td style="text-align: right;"><b>${(this.point.properties.MEI).toLocaleString('pt-BR')}</b></td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.MEI).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>1 427 367</b></td>
                                     </tr>
                                     <tr>
                                         <td>● MPE:</td>
-                                        <td style="text-align: right;"><b>${(this.point.properties.MPE).toLocaleString('pt-BR')}</b></td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.MPE).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>921 653</b></td>
                                     </tr>
                                     <tr>
                                         <td>● Demais:</td>
-                                        <td style="text-align: right;"><b>${(this.point.properties.Demais).toLocaleString('pt-BR')}</b></td>
+                                        <td style="text-align: right;"><b>${(this.point.properties.Demais).toLocaleString('fr-FR')}</b></td>
+                                        <td style="text-align: right;"><b>139 918</b></td>
                                     </tr>
                                 </table>`;
                     }
@@ -178,8 +152,8 @@
     </script>
     <style>
         #container {
-            height: 95vh;
-            width: 95vw;
+            height: 148mm;
+            width: 210mm;
             margin: 0 auto;
             background-color: #444;
             border: 1px solid #000;
